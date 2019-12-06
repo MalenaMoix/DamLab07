@@ -2,6 +2,8 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 import {View, Text, Button, Picker, Switch, TextInput} from 'react-native';
 
+const styles = StyleSheet
+//TODO Definir el stylesheet
 const rubroDefault = {
     id:null,
     descripcion:'',
@@ -9,7 +11,7 @@ const rubroDefault = {
     destacar:false,
 };
 
-const Rubro = () => {
+const Rubro = ({navigation}) => {
 
     const [flag, setFlag] = useState(false);
     const [rubro, setRubro] = useState(rubroDefault);
@@ -17,16 +19,26 @@ const Rubro = () => {
 
     useEffect(() => {
         const doPost = () => {
-
-        };
-
+            fetch('http://10.15.155.201:6500/rubros',{//Ver la ip que usar
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(rubro),
+            }).then(response => {
+            return response.json();
+        }
+        ).then(data => {
+            setGuardar(false);
+        });
+    
+    
         if(guardar){
             //llamar a algo que guarde
             doPost;
         }
-    }
-    , [guardar]);
-    
+    }},[guardar]);
+    //Actualizar es lo mismo pero es PUT en vez de POST
     const actualizarEstado = (nombre, valor) => {
         const rubroNuevo = {...rubro, [nombre]:valor};
         setRubro(rubroNuevo);
@@ -58,6 +70,10 @@ const Rubro = () => {
         <Button title="Guardar"
                onPress = {doGuardar}
            />
+        <Button title="Volver" onPress = {() => {
+            navigation.navigate('Profile');
+        }}/>
+        
         
         </View>
 

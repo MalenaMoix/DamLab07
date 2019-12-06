@@ -4,6 +4,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 import {View, Text} from 'react-native';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import Rubro from './Rubro';
+import ListaRubro from './ListaRubro'
 
 
 const Vista1 = () => {
@@ -26,7 +27,7 @@ const Vista2 = () => {
 
 const MainNavigator = createBottomTabNavigator({
   Home: Rubro,
-  Profile: Vista2,
+  Profile: ListaRubro,
 });
 
 const DamApp = createAppContainer(MainNavigator);
